@@ -30,8 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
-// Route::middleware(['auth:sanctum', 'admin'])->get('/admin-only', function () {
-// });
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/createguru', [GuruController::class, 'store']);
