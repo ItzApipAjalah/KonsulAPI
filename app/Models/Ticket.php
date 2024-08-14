@@ -22,4 +22,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class, 'guru_id');
     }
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
 }

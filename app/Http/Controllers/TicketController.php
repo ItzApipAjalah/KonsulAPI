@@ -46,7 +46,7 @@ class TicketController extends Controller
         $ticket->update([
             'guru_id' => Auth::id(),
             'scheduled_at' => $request->scheduled_at,
-            'status' => 'dijadwalkan',
+            'status' => 'scheduled',
         ]);
 
         return response()->json(['message' => 'Ticket accepted and scheduled', 'ticket' => $ticket], 200);

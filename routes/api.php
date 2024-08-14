@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ChatController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,18 +32,26 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
-
+// admin role
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/createguru', [GuruController::class, 'store']);
     Route::post('/editguru/{id}', [GuruController::class, 'update']);
 });
 
+// guru role
 Route::middleware(['auth:sanctum', 'guru'])->group(function () {
     Route::get('/tickets/pending', [TicketController::class, 'viewTickets']);
     Route::post('/tickets/{id}/accept', [TicketController::class, 'acceptTicket']);
     Route::post('/tickets/{id}/close', [TicketController::class, 'closeTicket']);
 });
+
+// siswa role
 Route::middleware(['auth:sanctum', 'siswa'])->group(function () {
     Route::post('/tickets', [TicketController::class, 'createTicket']);
 });
 
+// all role
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/tickets/{ticket_id}/messages', [ChatController::class, 'sendMessage']);
+    Route::get('/tickets/{ticket_id}/messages', [ChatController::class, 'getMessages']);
+});
