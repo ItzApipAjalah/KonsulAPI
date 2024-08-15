@@ -107,10 +107,37 @@
     "data": {
         "ticket_id": 3,
         "sender_id": 2,
-        "message": "test",
+        "message": "Boleh Di perjelas",
         "updated_at": "2024-08-15T07:50:34.000000Z",
         "created_at": "2024-08-15T07:50:34.000000Z",
         "id": 1
     }
 }
 ```
+
+## 5. Menutup Tiket sebagai Guru
+
+`POST /tickets/{ticket_id}/close`
+
+### Response 
+```json
+{
+    "message": "Ticket closed",
+    "ticket": {
+        "id": 3,
+        "title": "Masalah Akademik",
+        "description": "Saya mengalami kesulitan dalam memahami materi.",
+        "siswa_id": 3,
+        "guru_id": 2,
+        "scheduled_at": "2024-08-16 15:30:00",
+        "status": "closed",
+        "priority": "low",
+        "created_at": "2024-08-15T07:45:26.000000Z",
+        "updated_at": "2024-08-15T07:54:27.000000Z"
+    }
+}
+```
+
+## Catatan
+
+Pastikan sudah login dan menggunakan token autentikasi yang benar dalam setiap request yang membutuhkan autentikasi.
