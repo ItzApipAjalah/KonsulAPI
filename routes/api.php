@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -41,6 +42,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 // guru role
 Route::middleware(['auth:sanctum', 'guru'])->group(function () {
     Route::get('/tickets/pending', [TicketController::class, 'viewTickets']);
+    Route::get('/my-tickets-guru', [TicketController::class, 'myTicketsForGuru']);
     Route::post('/tickets/{id}/accept', [TicketController::class, 'acceptTicket']);
     Route::post('/tickets/{id}/close', [TicketController::class, 'closeTicket']);
 });
@@ -48,6 +50,7 @@ Route::middleware(['auth:sanctum', 'guru'])->group(function () {
 // siswa role
 Route::middleware(['auth:sanctum', 'siswa'])->group(function () {
     Route::post('/tickets', [TicketController::class, 'createTicket']);
+    Route::get('/my-tickets', [TicketController::class, 'myTickets']);
 });
 
 // all role

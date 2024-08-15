@@ -17,6 +17,10 @@ class ChatController extends Controller
 
         $ticket = Ticket::findOrFail($ticket_id);
 
+        if (!in_array($ticket->status, ['pending', 'scheduled'])) {
+            return response()->json(['message' => 'Cannot send messages on this ticket at the current status'], 403);
+        }
+
         if (Auth::id() !== $ticket->siswa_id && Auth::id() !== $ticket->guru_id) {
             return response()->json(['message' => 'Unauthorized to send messages on this ticket'], 403);
         }
@@ -29,6 +33,7 @@ class ChatController extends Controller
 
         return response()->json(['message' => 'Message sent successfully', 'data' => $message], 201);
     }
+
 
     public function getMessages($ticket_id)
     {

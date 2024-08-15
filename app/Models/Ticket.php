@@ -10,7 +10,7 @@ class Ticket extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'siswa_id', 'guru_id', 'scheduled_at', 'status'
+        'title', 'description', 'priority', 'siswa_id', 'guru_id', 'scheduled_at', 'status'
     ];
 
     public function siswa()
