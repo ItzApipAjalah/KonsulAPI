@@ -14,11 +14,13 @@ class ApiTicketController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'priority' => 'required|in:low,medium,high',
         ]);
 
         $ticket = Ticket::create([
             'title' => $request->title,
             'description' => $request->description,
+            'priority' => $request->priority,
             'siswa_id' => Auth::id(),
         ]);
 
@@ -28,6 +30,27 @@ class ApiTicketController extends Controller
     public function viewTickets()
     {
         $tickets = Ticket::where('guru_id', null)->where('status', 'pending')->get();
+        return response()->json($tickets, 200);
+    }
+
+    public function myTicketsForGuru()
+    {
+        $tickets = Ticket::where('guru_id', Auth::id())
+                         ->orWhere(function($query) {
+                             $query->where('guru_id', null)
+                                   ->where('status', 'pending');
+                         })
+                         ->get();
+
+        return response()->json($tickets, 200);
+    }
+
+
+    public function myTickets()
+    {
+        // Retrieve tickets created by the authenticated siswa
+        $tickets = Ticket::where('siswa_id', Auth::id())->get();
+
         return response()->json($tickets, 200);
     }
 
@@ -46,7 +69,7 @@ class ApiTicketController extends Controller
         $ticket->update([
             'guru_id' => Auth::id(),
             'scheduled_at' => $request->scheduled_at,
-            'status' => 'dijadwalkan',
+            'status' => 'scheduled',
         ]);
 
         return response()->json(['message' => 'Ticket accepted and scheduled', 'ticket' => $ticket], 200);

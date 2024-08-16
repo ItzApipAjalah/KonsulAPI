@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->unsignedBigInteger('siswa_id'); // Siswa who created the ticket
-            $table->unsignedBigInteger('guru_id')->nullable(); // Guru who receives the ticket
-            $table->timestamp('scheduled_at')->nullable(); // Scheduled time
+            $table->unsignedBigInteger('siswa_id');
+            $table->unsignedBigInteger('guru_id')->nullable();
+            $table->timestamp('scheduled_at')->nullable();
             $table->enum('status', ['pending', 'scheduled', 'closed'])->default('pending');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('low');
             $table->timestamps();
 
             // Foreign keys

@@ -47,6 +47,8 @@
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                                     name="email"  placeholder="Email Address" required="">
                                     @error('password')
+                                    <span class="text-red-600">{{ $message }}</span>   
+                                    @enderror
    
                                     
                                 </div>
